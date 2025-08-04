@@ -1,5 +1,5 @@
 docker-compose.yml/
-.env/
+.env
 target/
 .mvn/
 mvnw
