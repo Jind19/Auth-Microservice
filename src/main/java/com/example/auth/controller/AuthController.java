@@ -27,7 +27,6 @@ public class AuthController {
         model.addAttribute("name", fullName);
         model.addAttribute("email", email);
         model.addAttribute("picture", picture);
-
         return "dashboard";
     }
 

@@ -1,4 +1,14 @@
-FROM ubuntu:latest
-LABEL authors="prachijindal"
+FROM eclipse-temurin:17-jdk AS builder
+WORKDIR /app
+COPY .mvn/ .mvn
+COPY mvnw pom.xml ./
+RUN ./mvnw dependency:go-offline
 
-ENTRYPOINT ["top", "-b"]
+COPY src ./src
+RUN ./mvnw clean package -DskipTests
+
+FROM eclipse-temurin:17-jdk
+WORKDIR /app
+COPY --from=builder /app/target/*.jar app.jar
+EXPOSE 9081
+ENTRYPOINT ["java", "-jar", "app.jar"]
